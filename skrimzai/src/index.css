@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-crimson-950: #1a0505;
+  --color-crimson-900: #2d0a0a;
+  --color-crimson-800: #4a0e0e;
+  --color-crimson-700: #7a1616;
+  --color-crimson-600: #9e1b1b;
+  --color-crimson-500: #c41e1e;
+  
+  /* Theme Colors */
+  --color-theme-bg: var(--theme-bg, #1a0505);
+  --color-theme-accent: var(--theme-accent, #c41e1e);
+  --color-theme-panel: var(--theme-panel, rgba(255, 255, 255, 0.05));
+}
+
+@layer base {
+  body {
+    @apply bg-theme-bg text-white min-h-screen selection:bg-theme-accent/30 overflow-hidden;
+    transition: background-color 0.5s ease;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-theme-panel backdrop-blur-xl border border-white/10 shadow-2xl;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden;
+    position: relative;
+  }
+
+  .glass-input {
+    @apply bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-theme-accent/50 transition-all placeholder:text-white/30 text-sm;
+  }
+
+  .glass-button {
+    @apply bg-theme-accent/80 hover:bg-theme-accent backdrop-blur-sm text-white font-bold rounded-xl px-6 py-3 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border border-white/10 shadow-lg text-sm;
+    box-shadow: 0 0 15px rgba(var(--theme-accent-rgb, 196, 30, 30), 0.3);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 10px rgba(var(--theme-accent-rgb, 196, 30, 30), 0.5);
+  }
+
+  .glow-border {
+    box-shadow: inset 0 0 10px rgba(var(--theme-accent-rgb, 196, 30, 30), 0.2), 0 0 10px rgba(var(--theme-accent-rgb, 196, 30, 30), 0.2);
+  }
+
+  .glass-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-shimmer::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.05) 45%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.05) 55%,
+      transparent 100%
+    );
+    transform: rotate(45deg);
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+  }
+
+  .glossy-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.02) 50%,
+      transparent 100%
+    );
+  }
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  20% { opacity: 0.5; }
+  80% { opacity: 0.5; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+.particle {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floatUp linear infinite;
+}
+
+.glow-particle {
+  position: absolute;
+  background: radial-gradient(circle, var(--color-theme-accent) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floatUp linear infinite;
+  filter: blur(8px);
+}
+
+/* Custom scrollbar for that dark red look */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-crimson-950;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-crimson-800 rounded-full hover:bg-crimson-700 transition-colors;
+}
